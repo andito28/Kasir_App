@@ -1,3 +1,12 @@
+<?php
+
+include("koneksi.php");
+
+  $data = $koneksi->query('SELECT * FROM barang');
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -35,7 +44,9 @@
   <div class="form-group">
     <label for="exampleFormControlSelect1">Kode Barang</label>
     <select class="form-control" id="exampleFormControlSelect1">
-      <option value="">1</option>
+    <?php while($row = $data->fetch(PDO::FETCH_OBJ)) : ?>
+      <option value=""><?=$row->kode?></option>
+      <?php endwhile; ?>
     </select>
   </div>
 
