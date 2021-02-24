@@ -2,10 +2,20 @@
 
 include("koneksi.php");
 
-  $data = $koneksi->query('SELECT * FROM barang');
+  $data_barang = $koneksi->query('SELECT * FROM barang');
+  $data_cart = $koneksi->query("SELECT barang.nama_barang,barang.harga,cart.qty,cart.kode FROM barang INNER JOIN cart ON barang.kode = cart.kode_barang");
 
+
+  // while($row = $data_barang->fetch(PDO::FETCH_ASSOC)){
+
+  //   $test = $row['nama_barang'];
+  //  }
+  
+ 
+  $total = 0;
+  
 ?>
-
+ 
 
 <!doctype html>
 <html lang="en">
@@ -40,13 +50,14 @@ include("koneksi.php");
     </ul>
   </div>
   <div class="card-body">
-  <form>
+  <form action="action.php" method="POST">
   <div class="form-group">
     <label for="exampleFormControlSelect1">Kode Barang</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-    <?php while($row = $data->fetch(PDO::FETCH_OBJ)) : ?>
-      <option value=""><?=$row->kode?></option>
-      <?php endwhile; ?>
+    <select class="form-control" id="exampleFormControlSelect1" name="kode_barang">
+    <option disabled selected> Kode Barang </option>
+    <?php while($row = $data_barang->fetch(PDO::FETCH_OBJ)) : ?>
+      <option value="<?=$row->kode?>"><?=$row->kode?></option>
+    <?php endwhile; ?>
     </select>
   </div>
 
@@ -65,11 +76,12 @@ include("koneksi.php");
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>TOTAL HARGA :</h6></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP  30.000</h6></a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP <?=number_format($total,2)?></h6></a>
       </li>
     </ul>
-  </div>
+  </div> 
   <div class="card-body">
+  <form action="">
   <table class="table table-bordered">
           <thead>
             <tr>
@@ -80,15 +92,20 @@ include("koneksi.php");
             </tr>
           </thead>
           <tbody>
+          <?php while($row = $data_cart->fetch(PDO::FETCH_OBJ)):?>
             <tr>
-              <td>Mark</td> 
-              <td>Otto</td>
-              <td><input type="text" name="qty" value="1" style="width:50px"></td>
-              <td>X</td>
+              <td><?=$row->nama_barang?></td> 
+              <td><?=$row->harga?></td>
+              <td><input type="text" name="qty" value="<?=$row->qty?>" style="width:50px"></td>
+              <td><a href="action.php?kode=<?=$row->kode?>" class="text-white bg-danger pl-3 pr-3 pt-1 pb-1"><b>X</b></a></td>
             </tr>
+            <?php $total += $row->qty ?>
+            <?php endwhile; ?>
           </tbody>
         </table>
+        <button class="btn btn-success btn-sm">Cetak</button>
   </div>
+  </form>
 </div>
 
   
