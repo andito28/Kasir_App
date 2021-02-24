@@ -1,5 +1,4 @@
 <?php
-
 include("koneksi.php");
 
   $data_barang = $koneksi->query('SELECT * FROM barang');
@@ -15,6 +14,8 @@ include("koneksi.php");
     $total += $subtotal;
 
    }
+
+ 
 
   
 ?>
@@ -72,7 +73,7 @@ include("koneksi.php");
 
   <div class="col-md-8">
 
-  <div class="card">
+  <div class="card" id="ref-cart">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
       <li class="nav-item">
@@ -100,14 +101,13 @@ include("koneksi.php");
             <tr>
               <td><?=$row->nama_barang?></td> 
               <td>Rp <?=number_format($row->harga)?></td>
-              <td>
-              <select name="qty"  class="quantity" data-item="<?=$row->kode?>" style="width:50px;">
 
-              <?php for($i=1; $i<=10; $i++) :?>
-                  <option value="<?=$i?>" <?= $row->qty == $i ? 'selected' : '';   ?>><?=$i?></option>
-              <?php endfor; ?>
-              
-              </select>
+              <td>
+              <form id="frm<?=$row->kode?>">
+                <input type="hidden" name="kode" value="<?=$row->kode?>">
+                <input type="number" name="qty" value="<?=$row->qty?>" style="width:55px;" 
+                onchange="updcart(<?=$row->kode?>)" onkeyup="updcart(<?=$row->kode?>)">
+              </form>
               </td>
               <td>Rp <?=number_format($row->harga * $row->qty)?></td>
               <td><a href="action.php?kode=<?=$row->kode?>" class="text-white bg-danger pl-3 pr-3 pt-1 pb-1"><b>X</b></a></td>
@@ -134,38 +134,27 @@ include("koneksi.php");
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     -->
-
     <script type="text/javascript">
-    (function(){
-    const classname = document.querySelectorAll('.quantity');
-
-        Array.from(classname).forEach(function(element){
-        element.addEventListener('change', function(){
-            const id = element.getAttribute('data-item');
-            // const qty = document.getElementById('qty').value;
-            axios.patch(`/Kasir_app?action.php?update=${id}`, {
-              quantity: this.value,
-                id: id
-              })
-              .then(function (response) {
-             
-                window.location.href = `/Kasir_app`
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-      })
-    })
-        })();
-</script>
+    function updcart(id){
+      $.ajax({
+        url :'updqty.php',
+        type :'GET',
+        data :$("#frm"+id).serialize(),
+        success:function(res){
+          console.log(id)
+          window.location.href = '/kasir_app'
+        }
+      });
+    }
+    </script>
   </body>
 </html>
