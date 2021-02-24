@@ -17,6 +17,12 @@ if(isset($_POST['kode_barang'])){
 
     header('location:index.php');
     
+}elseif($_GET['update']){
+
+    // $update = $koneksi->prepare("UPDATE cart SET qty =:kode WHERE(kode=:kode)");
+
+    var_dump($_GET['qty']);
+
 }else{
 
     header('location:index.php');
