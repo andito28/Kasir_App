@@ -2,9 +2,11 @@
 include("koneksi.php");
 
   $data_barang = $koneksi->query('SELECT * FROM barang');
+  $cart = $koneksi->query("SELECT * FROM cart");
   $data_cart = $koneksi->query("SELECT barang.nama_barang,barang.harga,cart.qty,cart.kode FROM barang INNER JOIN cart ON barang.kode = cart.kode_barang");
   $harga = $koneksi->query("SELECT barang.harga,cart.qty FROM barang INNER JOIN cart ON barang.kode = cart.kode_barang");
 
+  $count = $cart->rowCount();
   $total = 0;
 
   while($row = $harga->fetch(PDO::FETCH_ASSOC)){
@@ -48,8 +50,12 @@ include("koneksi.php");
       <div class="modal-body">
       <form>
         <div class="form-group">
+          <label for="nama">Kode Barang</label>
+          <input type="text" class="form-control" id="nama" name="nama"  aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
           <label for="nama">Nama Barang</label>
-          <input type="email" class="form-control" id="nama" name="nama"  aria-describedby="emailHelp">
+          <input type="text" class="form-control" id="nama" name="nama"  aria-describedby="emailHelp">
         </div>
         <div class="form-group">
           <label for="harga">Harga</label>
@@ -69,7 +75,7 @@ include("koneksi.php");
   <!-- <i class="fas fa-cash-register fa-2x"></i> KasirApp  -->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#34495E">
   <a class="navbar-brand text-white" href="index.php">
-  <i class="fas fa-cash-register fa-2x" style="color:white"></i> KasirApp</a>
+  <i class="fas fa-cash-register" style="color:white;font-size:35px;"></i> KasirApp</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -85,11 +91,13 @@ include("koneksi.php");
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-light btn-sm my-2 my-sm-0" type="submit">Search</button>
+    <i class="fas fa-cart-arrow-down" style="color:white; font-size:20px;"> <span style="color:#white; background-color: red; padding-right:7px; padding-left:7px; padding-bottom:2px;  border-radius:50%; font-size:20px;"><?=$count?></span>
+    </i>
     </form>
   </div>
 </nav>
+
+
 
 <div class="row pt-4">
   <div class="col-md-4">
@@ -128,7 +136,7 @@ include("koneksi.php");
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>TOTAL HARGA :</h6></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP <?=number_format($total)?></h6></a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP. <?=number_format($total)?></h6></a>
         <input type="hidden" id="total_bayar" value="<?=$total?>">
       </li>
     </ul>
@@ -149,7 +157,7 @@ include("koneksi.php");
           <?php while($row = $data_cart->fetch(PDO::FETCH_OBJ)):?>
             <tr>
               <td><?=$row->nama_barang?></td> 
-              <td>Rp <?=number_format($row->harga)?></td>
+              <td>Rp. <?=number_format($row->harga)?></td>
 
               <td>
               <form id="frm<?=$row->kode?>">
@@ -158,7 +166,7 @@ include("koneksi.php");
                 onchange="updcart(<?=$row->kode?>)" onkeyup="updcart(<?=$row->kode?>)">
               </form>
               </td>
-              <td>Rp <?=number_format($row->harga * $row->qty)?></td>
+              <td>Rp. <?=number_format($row->harga * $row->qty)?></td>
               <td><a href="action.php?kode=<?=$row->kode?>" class="bg-danger pl-3 pr-3 pt-1 pb-1"><i class="fas fa-times" style="color:white"></i></a></td>
             </tr>
             <?php endwhile; ?>
@@ -214,14 +222,13 @@ include("koneksi.php");
       return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
-
     function bayar(){
       var total_bayar = document.getElementById('total_bayar').value;
       var bayar = document.getElementById('bayar').value;
 
       var kembalian = (bayar-total_bayar);
 
-      document.getElementById('kembalian').value = "RP "+formatNumber(kembalian);
+      document.getElementById('kembalian').value = "RP. "+formatNumber(kembalian);
       console.log(bayar);
     }
     </script>
