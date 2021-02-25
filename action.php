@@ -17,7 +17,17 @@ if(isset($_POST['kode_barang'])){
 
     header('location:index.php');
     
+}else if($_POST['kode'] && $_POST['qty']){
+
+    $kode = $_POST['kode'];
+    $qty = $_POST['qty'];
+
+    $update = $koneksi->prepare("UPDATE cart SET qty =:qty WHERE(kode=:kode)");
+
+    $update->execute([':qty'=>$qty,':kode'=>$kode]);
+
 }else{
 
-    header('location:index.php');
+         header('location:index.php');
+
 }
