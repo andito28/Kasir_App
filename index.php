@@ -128,7 +128,8 @@ include("koneksi.php");
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>TOTAL HARGA :</h6></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP <?=number_format($total,2)?></h6></a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><h6>RP <?=number_format($total)?></h6></a>
+        <input type="hidden" id="total_bayar" value="<?=$total?>">
       </li>
     </ul>
   </div> 
@@ -161,8 +162,23 @@ include("koneksi.php");
               <td><a href="action.php?kode=<?=$row->kode?>" class="bg-danger pl-3 pr-3 pt-1 pb-1"><i class="fas fa-times" style="color:white"></i></a></td>
             </tr>
             <?php endwhile; ?>
+            <tr>
+              <td colspan="5" style="padding-bottom:0;padding-top:20px;"> 
+              <div class="form-group row">
+                <label for="inputPassword" class="col-form-label pl-3" style="color:#6C6D6D"><h6>BAYAR :</h6></label>
+               <div class="col-4">
+                  <input type ="number" class="form-control" id="bayar" onchange="bayar()" onkeyup="bayar()">
+                </div>
+                <label for="kembalian" class="col-form-label pl-3" style="color:#6C6D6D"><h6>KEMBALIAN : </h6></label>
+                <div class="col-4">
+                  <input type ="text" class="form-control" id="kembalian" disabled>
+                </div>
+              </div>
+              </td>
+            </tr>
           </tbody>
         </table>
+        <!-- <button class="btn btn-sm text-white" style="background-color:#E67E22"><i class="fas fa-calculator"></i> Hitung</button>&emsp; -->
         <button class="btn btn-sm text-white" style="background-color:#34495E"><i class="fas fa-print"></i> Cetak</button>
   </div>
 </div>
@@ -192,6 +208,21 @@ include("koneksi.php");
           window.location.href = '/kasir_app'
         }
       });
+    }
+
+    function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
+
+    function bayar(){
+      var total_bayar = document.getElementById('total_bayar').value;
+      var bayar = document.getElementById('bayar').value;
+
+      var kembalian = (bayar-total_bayar);
+
+      document.getElementById('kembalian').value = "RP "+formatNumber(kembalian);
+      console.log(bayar);
     }
     </script>
   </body>
