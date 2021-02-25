@@ -36,8 +36,8 @@ include("koneksi.php");
   <body>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Tambah Barang</h5>
@@ -46,20 +46,20 @@ include("koneksi.php");
         </button>
       </div>
       <div class="modal-body">
-              <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Nama Barang</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama barang">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Harga Barang</label>
-            <input type="number" class="form-control" id="exampleInputPassword1" placeholder="harga barang">
-          </div>
-        </form>
+      <form>
+        <div class="form-group">
+          <label for="nama">Nama Barang</label>
+          <input type="email" class="form-control" id="nama" name="nama"  aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="harga">Harga</label>
+          <input type="number" class="form-control" id="harga" name="harga">
+        </div>
+      </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-sm text-white" style="background-color:#34495E">Tambah</button>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@ include("koneksi.php");
   <!-- <i class="fas fa-cash-register fa-2x"></i> KasirApp  -->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#34495E">
   <a class="navbar-brand text-white" href="index.php">
-  <i class="fas fa-cash-register fa-2x" style="color:whiteF"></i> KasirApp</a>
+  <i class="fas fa-cash-register fa-2x" style="color:white"></i> KasirApp</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -77,8 +77,11 @@ include("koneksi.php");
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" >
-      <li class="nav-item active">
-        <a class="nav-link pt-4 text-white" href="#"><i class="fas fa-plus-square"></i> Barang <span class="sr-only">(current)</span></a>
+      <li class="nav-item active pt-3">
+      <button type="button" class="btn text-white" data-toggle="modal" data-target="#exampleModal">
+      <i class="fas fa-plus-square"></i> Barang 
+      </button>
+        <!-- <a class="nav-link pt-4 text-white" href="#"><i class="fas fa-plus-square"></i> Barang <span class="sr-only">(current)</span></a> -->
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
