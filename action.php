@@ -7,7 +7,7 @@ if(isset($_POST['tambah_barang'])){
 
     $add->execute([':kode'=>$_POST['kode'],':nama'=>$_POST['nama'],':harga'=>$_POST['harga']]);
     
-    header('location:index.php');
+    header('location:index.php?page=daftar_barang');
     
 }elseif(isset($_POST['kode_barang'])){
 
@@ -25,6 +25,14 @@ if(isset($_POST['tambah_barang'])){
 
     header('location:index.php');
     
+}else if($_GET['hapus_barang']){
+
+    $delete = $koneksi->prepare("DELETE FROM barang WHERE(kode = :kode)");
+
+    $delete->execute([':kode'=>$_GET['hapus_barang']]);
+
+    header('location:index.php?page=daftar_barang');
+    
 }else if($_POST['kode']){
 
     $kode = $_POST['kode'];
@@ -39,5 +47,6 @@ if(isset($_POST['tambah_barang'])){
     $update->execute([':qty'=>$qty,':kode'=>$kode]);
 
 }else{
-         header('location:index.php');
+
+    header('location:index.php');
 }
