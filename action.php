@@ -17,6 +17,14 @@ if(isset($_POST['tambah_barang'])){
 
     header('location:index.php');
 
+}elseif(isset($_POST['edit_barang'])){
+
+    $update = $koneksi->prepare("UPDATE barang SET kode =:kode,nama_barang = :nama, harga = :harga WHERE(kode=:kode_lama)");
+
+    $update->execute([':kode'=>$_POST['kode'],':nama'=>$_POST['nama'],':harga'=>$_POST['harga'],':kode_lama'=>$_POST['kode_lama']]);
+
+    header('location:index.php?page=daftar_barang');
+    
 }elseif(isset($_GET['kode'])){
 
     $delete = $koneksi->prepare("DELETE FROM cart WHERE(kode = :kode)");

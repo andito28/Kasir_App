@@ -1,7 +1,14 @@
 <?php
 include_once("koneksi.php");
  $cart = $koneksi->query("SELECT * FROM cart");
- $count = $cart->rowCount();
+ if($cart->rowCount() > 0){
+   
+   $count = $cart->rowCount();
+
+ }else{
+
+   $count = 0;
+ }
  $page = isset($_GET['page'])?$_GET['page']:false;
 ?>
 <!doctype html>

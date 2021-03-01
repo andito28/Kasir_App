@@ -109,10 +109,9 @@ include("koneksi.php");
           </tbody>
         </table>
         <!-- <button class="btn btn-sm text-white" style="background-color:#E67E22"><i class="fas fa-calculator"></i> Hitung</button>&emsp; -->
-        <button class="btn btn-sm text-white" style="background-color:#34495E"><i class="fas fa-print"></i> Cetak</button>
+        <a href="cetak.php"><button class="btn btn-sm text-white" style="background-color:#34495E"><i class="fas fa-print"></i> Cetak</button></a>
   </div>
 </div>
-
   
   </div>
 
