@@ -38,7 +38,7 @@ while($row = $harga->fetch(PDO::FETCH_ASSOC)){
     <table align="center" cellpadding="5">
         <tr>
             <th>Kode</th>
-            <th>Nama Barang</th>
+            <th>Barang</th>
             <th>quantity</th>
             <th>Harga</th>
         </tr>
