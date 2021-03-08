@@ -127,7 +127,7 @@ include("koneksi.php");
               data :$("#frm"+id).serialize(),
               success:function(res){
                 console.log(id)
-                window.location.href = '/kasir_app'
+                window.location.href = 'index.php'
               }
             });
           }
