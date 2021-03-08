@@ -39,22 +39,24 @@ while($row = $harga->fetch(PDO::FETCH_ASSOC)){
         <tr>
             <th>Kode</th>
             <th>Barang</th>
-            <th>quantity</th>
             <th>Harga</th>
+            <th>qty</th>
+            <th>Sub</th>
         </tr>
         <?php while($row = $data_cart->fetch(PDO::FETCH_OBJ)):?>
         <tr>
             <td><?=$row->kode?></td>
             <td><?=$row->nama_barang?></td>
-            <td><?=$row->qty?></td>
             <td><?=number_format($row->harga)?></td>
+            <td><?=$row->qty?></td>
+            <td><?=number_format($row->harga * $row->qty)?></td>
         </tr>
         <?php endwhile; ?>
         <tr>
-            <td colspan="4"><hr></td>
+            <td colspan="5"><hr></td>
         </tr>
         <tr>
-            <td colspan="3">Total Harga</td>
+            <td colspan="4">Total Harga</td>
             <td><?=number_format($total)?></td>
         </tr>
     </table>
