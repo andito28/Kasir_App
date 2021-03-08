@@ -57,8 +57,8 @@ include_once("koneksi.php");
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-    <i class="fas fa-cart-arrow-down" style="color:white; font-size:20px;"> <span class="bg-danger" style="color:#white;padding-right:7px; padding-left:7px; padding-bottom:2px;  border-radius:50%; font-size:20px;"><?=$count?></span>
-    </i>
+    <a href="index.php"><i class="fas fa-cart-arrow-down" style="color:white; font-size:20px;"> <span class="bg-danger" style="color:#white;padding-right:7px; padding-left:7px; padding-bottom:2px;  border-radius:50%; font-size:20px;"><?=$count?></span>
+    </i></a>
     </form>
   </div>
 </nav>
