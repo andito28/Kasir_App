@@ -15,6 +15,7 @@ include("koneksi.php");
 
    }
 
+
   
 ?>
  
@@ -64,6 +65,15 @@ include("koneksi.php");
     </ul>
   </div> 
   <div class="card-body">
+
+  <?php
+  if(isset($_GET['gagal'])){
+    echo"<div class='alert alert-danger' role='alert'>
+   Barang sudah ada dalam keranjang
+  </div>";
+  }
+
+  ?>
   <table class="table table-bordered">
           <thead>
             <tr>

@@ -11,11 +11,23 @@ if(isset($_POST['tambah_barang'])){
     
 }elseif(isset($_POST['kode_barang'])){
 
+    $kode_barang = $_POST['kode_barang'];
+
+    $duplicat = $koneksi->prepare("SELECT * FROM cart WHERE kode_barang = :kode");
+    $duplicat->execute([":kode" =>$kode_barang]);
+
+    if($duplicat->rowCount() > 0){
+      
+        header('location:index.php?gagal');
+   
+    }else{
+
     $add = $koneksi->prepare("INSERT INTO cart(kode_barang,qty) VALUE(:kode_barang,:qty)");
 
     $result = $add->execute([':kode_barang'=>$_POST['kode_barang'],':qty'=>1]);
 
     header('location:index.php');
+    }
 
 }elseif(isset($_POST['edit_barang'])){
 
